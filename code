@@ -1,0 +1,78 @@
+class Bank():
+
+    num_accounts = 0
+    accounts = {}
+    def __init__(self, name):
+        self.name = name
+        self.amount = 0
+        Bank.num_accounts += 1
+        Bank.accounts[name] = self
+
+    def deposit(self, money):
+        self.amount += money
+
+    def withdrawl(self, money):
+        self.amount -= money
+
+    @staticmethod
+    def check_deposit(name, amount):
+        if name not in Bank.accounts:
+            return False
+        else:
+            Bank.accounts[name].deposit(amount)
+            return True
+
+    @staticmethod
+    def check_withdrawl(name, amount):
+        if name not in Bank.accounts:
+            return False
+        else:
+            Bank.accounts[name].withdrawl(amount)
+            return True
+
+    @classmethod
+    def chk_deposit(cls, name, amount):
+        if name not in cls.accounts:
+            return False
+        else:
+            cls.accounts[name].deposit(amount)
+            return True 
+ 
+    @classmethod
+    def chk_withdrawl(cls, name, amount):
+        if name not in cls.accounts:
+            return False
+        else:
+            cls.accounts[name].withdrawl(amount)
+            return True 
+     
+    @staticmethod
+    def num():
+        return Bank.num_accounts
+
+    @classmethod
+    def num2(cls):
+        return cls.num_accounts
+
+    @staticmethod
+    def dump():
+        for member in Bank.accounts:
+            print('Name = {}, Amount = {}'.format(Bank.accounts[member].name, Bank.accounts[member].amount))
+
+
+if __name__ == '__main__':
+    while True:
+        b = input('Enter: ')
+        lst = b.split()
+        if lst[0] == 'create':
+            s = Bank(lst[1])
+        elif lst[0] == 'deposit':
+            if Bank.check_deposit(lst[1], float(lst[2]))==False:
+                print('{} does not exsit'.format(lst[1]))
+        elif lst[0] == 'withdraw':
+            if Bank.chk_withdrawl(lst[1], float(lst[2]))==False:
+                print('{} does not exsit'.format(lst[1]))
+        elif lst[0] == 'dump':
+            Bank.dump()
+                       
+    
